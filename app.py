@@ -6,11 +6,11 @@ import pymysql
 import matplotlib.pyplot as plt
 
 # MySQL connection parameters
-MYSQL_USER = 'root'
-MYSQL_PASSWORD = ''
-MYSQL_HOST = 'localhost'
+MYSQL_USER = 'sql12740691'
+MYSQL_PASSWORD = 'xnGri65wVa'
+MYSQL_HOST = 'sql12.freesqldatabase.com'
 MYSQL_PORT = 3306
-MYSQL_DATABASE = 'customer_order'
+MYSQL_DATABASE = 'sql12740691'
 
 # Establish connection using SQLAlchemy
 engine = create_engine(f'mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}')
