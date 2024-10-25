@@ -79,7 +79,7 @@ def show_app_page():
     unique_customers = filtered_data['customer_id'].nunique()
     total_orders = filtered_data['order_id'].nunique()
 
-    st.metric("Total Revenue", f"${total_revenue:,.2f}")
+    st.metric("Total Revenue", f"Rs.{total_revenue:,.2f}")
     st.metric("Unique Customers", unique_customers)
     st.metric("Total Orders", total_orders)
 
