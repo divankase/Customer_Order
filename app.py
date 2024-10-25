@@ -16,22 +16,39 @@ MYSQL_DATABASE = 'sql12740691'
 engine = create_engine(f'mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DATABASE}')
 
 # Load data from MySQL tables
-customers = pd.read_sql('SELECT * FROM customers', engine)
-orders = pd.read_sql('SELECT * FROM orders', engine)
+try:
+    orders = pd.read_sql('SELECT * FROM orders', engine)
+    
+    # Check if the orders DataFrame is not empty
+    if not orders.empty:
+        # Convert order_date to datetime
+        orders['order_date'] = pd.to_datetime(orders['order_date'])
 
-# Ensure customer_id is of the same type in both DataFrames
-customers['customer_id'] = customers['customer_id'].astype(str)
-orders['customer_id'] = orders['customer_id'].astype(str)
+        # Sidebar filters
+        st.sidebar.header("Filters")
 
-# Convert order_date to datetime
-orders['order_date'] = pd.to_datetime(orders['order_date'])
+        # Date range filter
+        min_date = orders['order_date'].min()
+        max_date = orders['order_date'].max()
+        
+        # Check if min_date and max_date are valid
+        if pd.isna(min_date) or pd.isna(max_date):
+            st.error("Date values are invalid. Please check the data in the orders table.")
+        else:
+            start_date, end_date = st.sidebar.date_input("Select order date range:", [min_date, max_date])
+            
+            # Filter orders based on selected date range
+            filtered_orders = orders[(orders['order_date'] >= pd.Timestamp(start_date)) & 
+                                     (orders['order_date'] <= pd.Timestamp(end_date))]
+            
+            # Display filtered orders
+            st.subheader("Filtered Orders")
+            st.dataframe(filtered_orders)
+    else:
+        st.error("The orders table is empty. Please check your database.")
 
-# Sidebar filters
-st.sidebar.header("Filters")
-
-# Date range filter
-start_date, end_date = st.sidebar.date_input("Select order date range:", [orders['order_date'].min(), orders['order_date'].max()])
-filtered_orders = orders[(orders['order_date'] >= pd.Timestamp(start_date)) & (orders['order_date'] <= pd.Timestamp(end_date))]
+except Exception as e:
+    st.error("Error loading data from the database: " + str(e))
 
 # Slider to filter customers by total amount spent
 min_amount = 0
