@@ -30,8 +30,6 @@ def show_loading_page():
     </div>
     """
 
-
-
     st.markdown(ecommerce_animation, unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns([11.5, 4, 11.5])  # Three columns with proportions
@@ -40,11 +38,12 @@ def show_loading_page():
         if st.button("Get Start"):
             # Set a flag in the session state to indicate loading is done
             st.session_state['loaded'] = True
+            st.rerun()  # Use st.rerun() instead of st.experimental_rerun()
 
 # Check if loading is done, otherwise show the loading page
 if 'loaded' not in st.session_state:
     show_loading_page()
 else:
-    # Import and show the main page for Stroke Prediction
+    # Import and show the main page for the application
     import app  # Ensure 'app.py' is in the same directory
-    app.show_main_page()
+    app.show_app_page()
