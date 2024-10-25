@@ -21,6 +21,6 @@ matplotlib==3.7.1
 joblib==1.2.0
 
 How to run?
-In terminal type as 'streamlit run app.py'
+In terminal type as 'streamlit run loading.py'
 
 
