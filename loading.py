@@ -26,7 +26,7 @@ def show_loading_page():
     }
     </style>
     <div class="shopping-cart">
-        <div>🛒</div> <!-- Shopping cart icon -->
+        <div>🛍️</div> <!-- Shopping cart icon -->
     </div>
     """
 
